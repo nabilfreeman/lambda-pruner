@@ -45,7 +45,7 @@ npm test
 
 # Deploying to Lambda
 
-On Lambda point to `index.handler` and make sure your execution role has `AWSLambdaFullAccess` permissions.
+NB: Your Lambda needs to be configured properly. See the next section.
 
 ## Automatic
 
@@ -58,3 +58,19 @@ Make sure you have authenticated using `aws configure`.
 ## Manual
 
 Zip it up with the node_modules included and point to `index.handler`.
+
+# Lambda configuration
+
+`index.handler` should be the entry point on your Lambda. I've tested with Node 12.
+
+You need the following permissions on your execution role:
+
+- `AWSLambdaFullAccess` - for managing Lambdas
+- `AmazonEC2ReadOnlyAccess` - for listing out EC2 regions
+- `CloudWatchLogsFullAccess` - for logging
+
+I recommend a 5 minute timeout on the Lambda function.
+
+# Contribute
+
+PRs appreciated ❤️
