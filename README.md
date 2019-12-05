@@ -13,18 +13,40 @@ Python 2 and Python 3 are a real headache. Sorry Python fans. I had to heavily e
 
 So I figured it would probably be faster just to rewrite it in Node.js. Then I can actually put this on Lambda and it will be able to prune itself.
 
-# How to run via CLI
+## What this deletes
+
+The script won't delete anything on $LATEST, or any versions that are linked to an alias. So don't worry, this script won't prune itself.
+
+Any other version across all your regions will get deleted.
+
+# Setup
 
 ```
 # Set up your credentials
+pip install awscli
 aws configure
 
 npm install
+```
 
-# This runs a small middleware that fakes a Lambda instance
-npm start
+# Run locally
+
+```
+npm test
 ```
 
 # Deploying to Lambda
 
-Zip it up with the node_modules included and point to `exports.handler`.
+On Lambda point to `index.handler` and make sure your execution role has `AWSLambdaFullAccess` permissions.
+
+## Automatic
+
+```
+LAMBDA_NAME=my-script bash deploy.sh
+```
+
+Make sure you have authenticated using `aws configure`.
+
+## Manual
+
+Zip it up with the node_modules included and point to `index.handler`.
