@@ -1,4 +1,4 @@
-const Lambda = require('../exports.js');
+const Lambda = require('../index.js');
 
 const run = async () => {
 	console.log(`Testing...`);
