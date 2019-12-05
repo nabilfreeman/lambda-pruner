@@ -84,7 +84,7 @@ exports.handler = function(event, context, callback) {
 						deleted += 1;
 					} catch(error) {
 						if(process.env.DEBUG){
-							console.log(`🌏 ${region} : 🤖 ${function_name} : 📊 ${version}: ${error.message}`);
+							console.log(`🌏 ${region} : 🤖 ${function_name} : 📊 ${version} : ${error.message}`);
 						}
 
 						skipped += 1;
