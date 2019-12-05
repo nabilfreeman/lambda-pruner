@@ -62,18 +62,14 @@ exports.handler = function(event, context, callback) {
 		const regions = await listRegions();
 
 		for(const region of regions){
-			console.log(`🌏 ${region}`);
-
 			const functions = await listFunctions(region);
 
-			console.log(`Found ${functions.length} functions in ${region}.`);
+			console.log(`🌏 ${region} : Found ${functions.length} functions.`);
 
 			for(const function_name of functions){
-				console.log(`🤖 ${function_name}`);
-
 				const versions = await listVersions(region, function_name);
 
-				console.log(`Found ${versions.length} versions for ${function_name}.`)
+				console.log(`🌏 ${region} : 🤖 ${function_name} : Found ${versions.length} versions.`)
 
 				let deleted = 0;
 				let skipped = 0;
@@ -92,8 +88,8 @@ exports.handler = function(event, context, callback) {
 					}
 				}
 
-				console.log(`Deleted ${deleted} versions for ${function_name}.`)
-				console.log(`Skipped ${skipped} versions for ${function_name}.`)
+				console.log(`🌏 ${region} : 🤖 ${function_name} : Deleted ${deleted} versions.`)
+				console.log(`🌏 ${region} : 🤖 ${function_name} : Skipped ${skipped} versions.`)
 			}
 		}
 
