@@ -6,6 +6,8 @@ const AWS = require('aws-sdk');
 
 const { Lambda, EC2 } = AWS;
 
+const MaxItems = 10000;
+
 const listRegions = async () => {
 	const client = new EC2({
 		// this doesn't matter, we just need to provide a default region before listing them all out.
@@ -24,10 +26,34 @@ const listFunctions = async region => {
 
 	const { Functions } = await client.listFunctions({
 		FunctionVersion: 'ALL',
-		MaxItems: 10000
+		MaxItems
 	}).promise();
 
-	return Functions;
+	return Functions.map(result => result.FunctionName);
+}
+
+const listVersions = async (region, function_name) => {
+	const client = new Lambda({
+		region
+	});
+
+	const { Versions } = await client.listVersionsByFunction({
+		FunctionName: function_name,
+		MaxItems
+	}).promise();
+
+	return Versions.map(result => result.Version);
+}
+
+const deleteVersion = async (region, function_name, version) => {
+	const client = new Lambda({
+		region
+	});
+
+	await client.deleteFunction({
+		FunctionName: function_name,
+		Qualifier: version
+	}).promise();
 }
 
 exports.handler = function(event, context, callback) {
@@ -36,10 +62,42 @@ exports.handler = function(event, context, callback) {
 		const regions = await listRegions();
 
 		for(const region of regions){
+			console.log(`🌏 ${region}`);
+
 			const functions = await listFunctions(region);
 
 			console.log(`Found ${functions.length} functions in ${region}.`);
+
+			for(const function_name of functions){
+				console.log(`🤖 ${function_name}`);
+
+				const versions = await listVersions(region, function_name);
+
+				console.log(`Found ${versions.length} versions for ${function_name}.`)
+
+				let deleted = 0;
+				let skipped = 0;
+
+				for(const version of versions){
+					// up to this point we don't expect any errors that will not cease execution.
+					// but here, when we try and delete a version we might run into a restriction if it's referenced by $LATEST or another alias.
+					try{
+						await deleteVersion(region, function_name, version);
+
+						// console.log(`Deleted ${function_name}:${version}.`)
+						deleted += 1;
+					} catch(error) {
+						// console.log(`Can't delete ${function_name}:${version} because: ${error.message}`);
+						skipped += 1;
+					}
+				}
+
+				console.log(`Deleted ${deleted} versions for ${function_name}.`)
+				console.log(`Skipped ${skipped} versions for ${function_name}.`)
+			}
 		}
+
+		console.log(`✅ Finished`)
 
 		//error, result
 		callback(null, true);
