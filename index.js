@@ -83,7 +83,10 @@ exports.handler = function(event, context, callback) {
 						// console.log(`Deleted ${function_name}:${version}.`)
 						deleted += 1;
 					} catch(error) {
-						// console.log(`Can't delete ${function_name}:${version} because: ${error.message}`);
+						if(process.env.DEBUG){
+							console.log(`🌏 ${region} : 🤖 ${function_name} : 📊 ${version}: ${error.message}`);
+						}
+
 						skipped += 1;
 					}
 				}

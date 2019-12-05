@@ -15,9 +15,17 @@ So I figured it would probably be faster just to rewrite it in Node.js. Then I c
 
 ## What this deletes
 
-The script won't delete anything on $LATEST, or any versions that are linked to an alias. So don't worry, this script won't prune itself.
+The script will not delete:
+
+- Anything on $LATEST
+- Anything with a linked alias
+- Lambda@Edge functions
 
 Any other version across all your regions will get deleted.
+
+Don't worry, this won't delete itself due to the $LATEST rule.
+
+You'll see `deleted: 3` and `skipped: 1` in the logs. If you want to see the full reasons why certain versions are being skipped, just add `DEBUG=1` (or anything else truthy) to your environment.
 
 # Setup
 
