@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/nabilfreeman/lambda-pruner/issues"
   },
-  "homepage": "https://github.com/nabilfreeman/lambda-pruner#readme"
+  "homepage": "https://github.com/nabilfreeman/lambda-pruner#readme",
+  "dependencies": {
+    "aws-sdk": "^2.585.0"
+  }
 }
