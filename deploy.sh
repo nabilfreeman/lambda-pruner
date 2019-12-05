@@ -19,6 +19,7 @@ npm install
 echo "Zipping payload..."
 
 # create zip file, ignore .git directory
+rm -f exports.zip
 zip -r exports.zip . -x "*.git*" -q && echo "Zip complete." || echo "Zip failed."
 
 echo "Updating $LAMBDA_NAME..."
