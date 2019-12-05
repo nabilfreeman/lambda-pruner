@@ -1,0 +1,28 @@
+{
+  "name": "lambda-pruner",
+  "version": "1.0.0",
+  "description": "NodeJS Script to prune old Lambda versions",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabilfreeman/lambda-pruner.git"
+  },
+  "keywords": [
+    "lambda",
+    "prune",
+    "clean",
+    "lambda",
+    "storage",
+    "75gb",
+    "limit"
+  ],
+  "author": "@nabilfreeman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nabilfreeman/lambda-pruner/issues"
+  },
+  "homepage": "https://github.com/nabilfreeman/lambda-pruner#readme"
+}
