@@ -50,7 +50,7 @@ On Lambda point to `index.handler` and make sure your execution role has `AWSLam
 ## Automatic
 
 ```
-LAMBDA_NAME=my-script bash deploy.sh
+LAMBDA_NAME=my-script REGION=eu-west-1 bash deploy.sh
 ```
 
 Make sure you have authenticated using `aws configure`.

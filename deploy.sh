@@ -6,6 +6,7 @@
 
 # AWS_ACCESS_KEY_ID=XXXXXXX
 # AWS_SECRET_ACCESS_KEY=XXXXXXXX
+# REGION=eu-west-1
 # LAMBDA_NAME=my-script
 # ***************************************
 
